@@ -126,6 +126,7 @@
     height:125vh;
     /*background-image: linear-gradient(to bottom right, red, blue);*/
     background: linear-gradient(180deg,rgba(235,51,51,100%) 0%, rgba(49,44,158,100%) 100%);
+
 }
 
 .lead{
@@ -141,4 +142,13 @@
     height: 2150px;
     background: linear-gradient(180deg,rgba(235,51,51,100%) 0%, rgba(49,44,158,100%) 100%);
 }
+.IndexImageAlign{
+    display: grid;
+}
+.Sec2IndexImg{
+    margin-top: 50px;
+    margin-left: 50px;
 
+    width:25%;
+    height: auto;
+}
