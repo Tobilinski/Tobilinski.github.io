@@ -152,22 +152,3 @@
     width:25%;
     height: auto;
 }
-.ArrowClass{
-    position: absolute;
-    top: 50%;
-    left: 1%;
-}
-.ArrowImage{
-    width: 250px;
-
-}
-.ArrowClass2{
-    position: absolute;
-    top:50%;
-    right: 1%;
-
-}
-.ArrowImage2{
-    width: 250px;
-    transform: scaleX(-1);
-}
