@@ -1,171 +1,75 @@
 <!DOCTYPE html>
-<!--
-  DOCTYPE tells the browser this is a modern HTML5 document.
-  Without it, some browsers enter "quirks mode" and render things incorrectly.
--->
-
 <html lang="en">
-<!--
-  <html> is the root element that wraps the entire page.
-  lang="en" tells search engines and screen readers the page is in English.
--->
 
 <head>
-    <!--
-      <head> contains metadata — information ABOUT the page that isn't
-      displayed directly, but tells the browser how to set up the page.
-    -->
-
-    <!-- Character encoding: allows the browser to display all letters
-         including special characters like ä, ö, ü, & etc. -->
     <meta charset="UTF-8" />
-
-    <!-- Responsive viewport: tells mobile browsers not to zoom out and
-         shrink the page — instead render it at the device's actual width.
-         Without this, mobile browsers show the desktop version shrunken. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tobias Nölkensmeier | Software Developer</title>
 
-    <!-- The text shown in the browser tab and in search engine results -->
-    <title>Tobias Noelkensmeier | Game Developer</title>
-
-    <!-- ── External CSS: Bootstrap ───────────────────────────────────────
-         Bootstrap is a CSS framework that gives us a responsive grid
-         system, navbar, and other pre-built components for free.
-         We load it from a CDN (Content Delivery Network) — a fast
-         external server — so we don't have to host the file ourselves. -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Bootstrap's JavaScript (for navbar collapse on mobile, carousels etc.)
-         "defer" means: download in background, run AFTER the HTML has loaded.
-         This keeps page load fast. -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
 
-    <!-- ── Our custom CSS ────────────────────────────────────────────────
-         This loads AFTER Bootstrap so our styles override Bootstrap's
-         defaults where needed. Order matters — last loaded wins. -->
+    <!-- Our custom CSS loads last so it wins over Bootstrap -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- The small icon shown in the browser tab (favicon) -->
     <link rel="icon" type="image/x-icon" href="Favicon.ico" />
-
 </head>
 
 <body class="sec">
-<!--
-  <body> contains everything the visitor actually sees.
-  class="sec" applies our .sec CSS rule — sets the minimum
-  height and lets the body's own background texture show through.
--->
 
-
-<!-- ============================================================
-     HERO SECTION
-     The large name + title block at the very top of the page.
-
-     .p-5 is a Bootstrap spacing class we've overridden in
-     style.css to become our custom hero layout.
-     "text-white" is left over from the old version — style.css
-     overrides it with !important so it has no effect.
-============================================================ -->
+<!-- ── Hero ───────────────────────────────── -->
 <div class="p-5">
-    <!-- Main heading — your name. The ::before pseudo-element in CSS
-         automatically injects the "// PORTFOLIO v2025" label above this. -->
-    <h1>Tobias Noelkensmeier</h1>
-
-    <!-- Subtitle line. &amp; is the HTML entity for the & character —
-         you should never write & directly in HTML. -->
-    <p><strong>Game Developer &amp; XR Engineer</strong></p>
+    <h1>Tobias Nölkensmeier</h1>
+    <p><strong>Game Developer &amp; Software Developer</strong></p>
 </div>
 
-
-<!-- ============================================================
-     NAVIGATION BAR
-
-     Bootstrap's <nav> component. Key attributes:
-     - navbar-expand-sm: collapses to a hamburger menu on small screens
-     - navbar-dark: tells Bootstrap to use light-coloured text
-       (we override the background colour in style.css)
-     - sticky-top: the navbar sticks to the top of the screen
-       as you scroll down the page
-============================================================ -->
+<!-- ── Navigation ─────────────────────────── -->
 <nav class="navbar navbar-expand-sm navbar-dark sticky-top">
     <div class="container">
-        <!-- navbar-nav: Bootstrap class that styles the list as a horizontal menu -->
         <ul class="navbar-nav">
-
-            <!-- "active" highlights the current page link -->
             <li class="nav-item">
                 <a class="nav-link active" href="#">Home</a>
-                <!-- href="#" links to the top of the current page -->
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="AboutMe.html">Resume</a>
             </li>
-
             <li class="nav-item">
                 <a class="nav-link" href="Links.html">Portfolio Links</a>
             </li>
-
             <li class="nav-item">
-                <!-- target="_blank" opens the link in a new browser tab
-                     rel="noopener" is a security best practice when using target="_blank" -->
-                <a class="nav-link"
-                   href="https://www.youtube.com/channel/UC-FtY6tQXetA0PilkJQLZOw"
-                   target="_blank"
-                   rel="noopener">YouTube</a>
+                <a class="nav-link" href="https://www.youtube.com/channel/UC-FtY6tQXetA0PilkJQLZOw"
+                   target="_blank" rel="noopener">YouTube</a>
             </li>
-
         </ul>
     </div>
 </nav>
 
-
-<!-- ============================================================
-     ABOUT ME SECTION
-
-     <section> is a semantic HTML5 element — more meaningful than
-     a plain <div>. It tells search engines and screen readers
-     "this is a distinct section of the page".
-
-     .about-section, .about-inner, .about-label, .about-body
-     are all custom classes defined in style.css.
-============================================================ -->
+<!-- ── About Me ───────────────────────────── -->
 <section class="about-section">
-
-    <!-- .about-inner is a CSS Grid container:
-         left column (200px) = label | right column (flexible) = bio text -->
     <div class="about-inner">
 
-        <!-- LEFT COLUMN: the big "About Me" label -->
         <div class="about-label">
-            <!-- <span> is inline by default, but style.css sets it to display:block
-                 so it sits on its own line above "About Me" -->
             <span>// about</span>
             About<br>Me
-            <!-- <br> forces a line break inside the label — "About" on one line, "Me" below -->
         </div>
 
-        <!-- RIGHT COLUMN: bio paragraphs + skills -->
         <div class="about-body">
-
             <p>
                 Hi, I'm Tobi — a game developer with a Bachelor of Arts in Game Design and Production.
                 I currently work at <strong>Bizar Reality</strong>, building immersive VR and AR experiences
                 that push the boundaries of real-time 3D.
             </p>
-
             <p>
                 I'm comfortable in collaborative environments: contributing to shared codebases, shipping
-                on schedule, and communicating clearly across teams. My Unity work spans UI systems,
-                3D development, and XR (VR/AR) — and I'm always picking up something new.
+                on schedule, and communicating clearly with team members. My Unity work spans UI systems,
+                3D development, XR (VR/AR) to even custom input programming like Modbus or sim racing gear.
+                I'm always picking up something new!!
             </p>
-
             <p>
                 I speak German natively, English fluently, and have a working understanding of Afrikaans.
-                Outside the studio, I run YouTube channels documenting motorcycle adventures and outdoor trips.
+                Outside of work life, I run YouTube channels documenting motorcycle adventures and outdoor
+                trips as well as mess around in CAD programs.
             </p>
-
-            <!-- Skill tags: each <span> becomes a small pill badge via style.css -->
             <div class="about-tags">
                 <span>Unity</span>
                 <span>VR / AR</span>
@@ -174,121 +78,64 @@
                 <span>Game Design</span>
                 <span>XR</span>
             </div>
+        </div>
 
-        </div><!-- end .about-body -->
+    </div>
+</section>
 
-    </div><!-- end .about-inner -->
-
-</section><!-- end .about-section -->
-
-
-<!-- ============================================================
-     GALLERY HEADINGS
-
-     .center1 and .Undertxt are custom classes from style.css.
-     These are plain <div>s — no semantic meaning, just containers
-     for the heading text above the gallery.
-============================================================ -->
+<!-- ── Gallery headings ───────────────────── -->
 <div class="center1">
     <h2>Selected Work</h2>
 </div>
-
 <div class="Undertxt">
-    <!-- &amp; is the HTML entity for & -->
     <h3>3D art, environments &amp; game projects</h3>
 </div>
 
-
-<!-- ============================================================
-     GALLERY
-
-     Uses Bootstrap's 12-column grid system:
-     - .row creates a horizontal row
-     - .col-lg-4 = takes up 4 of 12 columns on large screens (= 1/3 width)
-     - .col-md-12 = takes up all 12 columns on medium screens (= full width)
-
-     Each image is wrapped in a <figure> element — the correct
-     semantic HTML for an image + caption pair.
-
-     figcaption is the HTML element specifically for image captions.
-============================================================ -->
+<!-- ── Gallery ────────────────────────────── -->
 <div class="Gallery">
     <div class="row">
 
-        <!-- Column 1 of 3 -->
         <div class="col-lg-4 col-md-12">
-
             <figure class="img-wrap">
-                <!-- alt text describes the image for screen readers and search engines.
-                     Always fill this in — it also shows if the image fails to load. -->
                 <img src="Tommy.jpg" class="imageBack" alt="Tommy character project" />
                 <figcaption>Tommy Gun — Weapon Hard Surface Modelling</figcaption>
             </figure>
-
             <figure class="img-wrap">
                 <img src="Boxxy.jpg" class="imageBack" alt="Boxxy project" />
                 <figcaption>Boxxy — Stylised 3D Model</figcaption>
             </figure>
+        </div>
 
-        </div><!-- end column 1 -->
-
-
-        <!-- Column 2 of 3 -->
         <div class="col-lg-4">
-
             <figure class="img-wrap">
                 <img src="Car.jpg" class="imageBack" alt="Car model" />
                 <figcaption>Vehicle — Hard Surface Modelling</figcaption>
             </figure>
-
             <figure class="img-wrap">
-                <!-- <video> embeds a video player.
-                     controls  = show play/pause/volume controls
-                     muted     = start silenced (required for autoplay in most browsers)
-                     loop      = replay automatically when it ends
-                     poster    = image shown before the video plays (like a thumbnail) -->
-                <video class="imageBack"
-                       controls
-                       muted
-                       loop
-                       poster="DEsk.blend10077.png">
-                    <!-- <source> tells the browser where the video file is and its format.
-                         You can list multiple <source> elements as fallbacks for different
-                         browser support — here we only need mp4 which all modern browsers support. -->
+                <video class="imageBack" controls muted loop poster="DEsk.blend10077.png">
                     <source src="BlenderArtchallenge.mp4" type="video/mp4">
-                    <!-- This text only shows if the browser can't play video at all -->
                     Your browser does not support the video tag.
                 </video>
                 <figcaption>Blender Art Challenge — Environment Scene</figcaption>
             </figure>
-
             <figure class="img-wrap">
                 <img src="Dungeon.jpg" class="imageBack" alt="Dungeon environment" />
                 <figcaption>Dungeon — Real-time Environment</figcaption>
             </figure>
+        </div>
 
-        </div><!-- end column 2 -->
-
-
-        <!-- Column 3 of 3 -->
         <div class="col-lg-4">
-
             <figure class="img-wrap">
-                <!-- &amp; in the figcaption — same rule: & must be written as &amp; in HTML -->
                 <img src="Armory.jpg" class="imageBack" alt="Armory scene" />
                 <figcaption>Armory — Prop &amp; Scene Dressing</figcaption>
             </figure>
-
             <figure class="img-wrap">
                 <img src="Pirate.png" class="imageBack" alt="Pirate game project" />
                 <figcaption>Pirate Game — Unity Game Project</figcaption>
             </figure>
+        </div>
 
-        </div><!-- end column 3 -->
-
-    </div><!-- end .row -->
-</div><!-- end .Gallery -->
-
-
+    </div>
+</div>
 </body>
 </html>

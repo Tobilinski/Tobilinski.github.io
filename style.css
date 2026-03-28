@@ -135,7 +135,7 @@ body {
    element without needing extra HTML. Nothing in the HTML
    file creates this text — CSS does it entirely on its own. */
 .p-5::before {
-    content: '// PORTFOLIO v2025'; /* the text that gets injected */
+    content: '// PORTFOLIO v2026'; /* the text that gets injected */
     display: block;
     font-family: var(--font-mono);
     font-size: 0.68rem;
