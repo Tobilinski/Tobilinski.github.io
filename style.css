@@ -454,8 +454,17 @@ body {
    Used on other pages (e.g. Links.html). Floated layout —
    older technique but kept for compatibility with existing pages.
    ------------------------------------------------------------ */
+.CardBase {
+    display: flex;
+    flex-wrap: wrap;         /* cards wrap to next line if they don't all fit */
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;        /* clears the float */
+    max-width: 1080px;
+    margin: 0 auto;          /* centres the whole group on the page */
+    padding: 2rem;
+}
 .Card {
-    float: left;        /* cards sit side by side */
     margin: 1.5rem;
     width: 360px;
     min-height: 160px;
