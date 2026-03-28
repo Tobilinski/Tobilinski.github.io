@@ -1,164 +1,645 @@
-*{
-    padding: 0;
+/* ============================================================
+   TOBIAS NOELKENSMEIER — Game Dev Portfolio
+   Aesthetic: Minimalist Retro Light
+
+   HOW CSS FILES WORK:
+   This file controls how everything LOOKS — colours, spacing,
+   fonts, layout. The HTML file controls the CONTENT and
+   STRUCTURE. The browser reads both and combines them.
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   GOOGLE FONTS IMPORT
+   We're pulling 3 typefaces from Google's free font library:
+   - Bebas Neue    → tall, condensed display font for big titles
+   - IBM Plex Mono → monospace (code-style) font for labels/nav
+   - Instrument Sans → clean body font for reading paragraphs
+   The browser downloads these when the page loads.
+   ------------------------------------------------------------ */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@300;400;500&family=Instrument+Sans:wght@300;400;500;600&display=swap');
+
+
+/* ------------------------------------------------------------
+   CSS CUSTOM PROPERTIES (VARIABLES)
+
+   :root targets the very top of the page (the <html> element).
+   Variables defined here are available EVERYWHERE in this file.
+   Think of them like named constants in code — change a value
+   once here and it updates every place it's used.
+
+   Syntax:  --variable-name: value;
+   Usage:   color: var(--variable-name);
+   ------------------------------------------------------------ */
+:root {
+
+    /* — Background colours (light → dark progression) — */
+    --bg:            #e8e0d0;   /* main page background — warm parchment */
+    --bg-hero:       #d4c9b0;   /* navbar background — slightly darker tan */
+    --bg-about:      #c8b99a;   /* about section background — deeper tan */
+    --bg-gallery:    #ede7da;   /* used on other pages with .sec2 class */
+    --surface:       #f2ede4;   /* card/image background — lighter than page */
+    --surface-raised:#faf7f2;   /* slightly brighter surface, used on cards */
+
+    /* — Text colours — */
+    --ink:           #1e1c18;   /* near-black — main headings and strong text */
+    --ink-mid:       #5a5548;   /* medium brown — body copy paragraphs */
+    --ink-faint:     #9a9080;   /* muted — captions, subtitles, labels */
+
+    /* — Accent colours — */
+    --accent:        #c45c1a;         /* faded orange — main interactive colour */
+    --accent-olive:  #6b7a3a;         /* olive green — used for the // code label */
+    --accent-light:  rgba(196,92,26,0.1); /* transparent version of accent for shadows */
+
+    /* — Borders & grid — */
+    --grid:          rgba(0,0,0,0.055);  /* very faint lines for the graph-paper texture */
+    --border:        rgba(0,0,0,0.12);   /* standard border on cards, images */
+    --border-strong: rgba(0,0,0,0.22);   /* stronger border for section dividers */
+
+    /* — Fonts — */
+    --font-display: 'Bebas Neue', sans-serif;    /* big titles */
+    --font-mono:    'IBM Plex Mono', monospace;  /* labels, nav, captions */
+    --font-body:    'Instrument Sans', sans-serif; /* paragraphs */
+
+    /* — Reusable design tokens — */
+    --radius:     3px;            /* how rounded corners are on cards/images */
+    --transition: all 0.2s ease;  /* smooth animation speed used on hover effects */
+    --max-w:      1080px;         /* maximum width content stretches to */
+}
+
+
+/* ------------------------------------------------------------
+   CSS RESET
+
+   Browsers apply their own default padding/margin/sizing which
+   differ between Chrome, Firefox, Safari etc. This reset clears
+   all of them so we start from a clean, consistent base.
+
+   * = "every element on the page"
+   *::before and *::after = decorative elements we inject via CSS
+   box-sizing: border-box means padding is included INSIDE the
+   element's width — much easier to work with than the default.
+   ------------------------------------------------------------ */
+*, *::before, *::after {
+    box-sizing: border-box;
     margin: 0;
-
+    padding: 0;
 }
 
-#game{
-  width: 500px;
-  height: 200px;
-  border: 1px solid black;
-  top: 100px;
+/* Smooth scrolling when clicking anchor links (e.g. #gallery) */
+html {
+    scroll-behavior: smooth;
 }
 
-#Character{
-  width: 20px;
-  height: 50px;
-  background-color: red;
-  position: relative;
-  top: 150px;
+/* — Base body styles — */
+body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-weight: 300;       /* light weight — looks more refined than default bold */
+    font-size: 15px;
+    line-height: 1.75;      /* space between lines of text — improves readability */
+    -webkit-font-smoothing: antialiased; /* makes fonts look crisper on Mac/retina screens */
+
+    /* — Graph paper background texture —
+       We're drawing two sets of faint lines using repeating gradients:
+       one set goes top-to-bottom (vertical lines),
+       one set goes left-to-right (horizontal lines).
+       Together they form a subtle grid across the entire page. */
+    background-image:
+            linear-gradient(var(--grid) 1px, transparent 1px),         /* horizontal lines */
+            linear-gradient(90deg, var(--grid) 1px, transparent 1px);  /* vertical lines */
+    background-size: 32px 32px; /* each grid square is 32x32 pixels */
 }
 
-.animate{
-  animation: jump 500ms;
+
+/* ------------------------------------------------------------
+   HERO SECTION  (.p-5)
+
+   The big name + title block at the top of the page.
+   We're reusing Bootstrap's .p-5 class name but overriding its
+   default styles completely with our own.
+   ------------------------------------------------------------ */
+.p-5 {
+    padding: 5rem 2rem 4rem; /* top | left+right | bottom — rem = relative to font size */
+    text-align: left;
+    max-width: var(--max-w); /* never wider than 1080px */
+    margin: 0 auto;          /* centres the block horizontally on wide screens */
+    background: none;        /* removes Bootstrap's default background */
+    color: var(--ink) !important; /* !important overrides Bootstrap's .text-white */
+    position: relative;      /* needed so the ::before pseudo-element positions correctly */
 }
 
-#block{
-  width: 20px;
-  height: 20px;
-  background-color: blue;
-  position: relative;
-  top: 130px;
-  left: 480px;
-  animation: block 1s infinite linear;
+/* — The "// PORTFOLIO v2025" label above the name —
+   ::before is a CSS trick that injects content BEFORE the
+   element without needing extra HTML. Nothing in the HTML
+   file creates this text — CSS does it entirely on its own. */
+.p-5::before {
+    content: '// PORTFOLIO v2025'; /* the text that gets injected */
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--accent-olive);  /* olive green */
+    letter-spacing: 0.2em;       /* wide spacing gives it a label feel */
+    margin-bottom: 0.85rem;
 }
 
-@keyframes jump {
-    0%{top: 150px;}
-    30%{top: 100px;}
-    70%{top: 100px;}
-    100%{top: 150px;}
+/* — The main name heading — */
+.p-5 h1 {
+    font-family: var(--font-display); /* Bebas Neue — tall condensed letters */
+    /* clamp(min, preferred, max) — fluid font size that scales with screen width:
+       minimum 3.5rem, ideally 8% of viewport width, maximum 7rem */
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 0.92;     /* tighter than 1 so tall letters sit close together */
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    text-transform: uppercase;
 }
 
-@keyframes block {
-    0%{left: 480px;}
-    100%{left: -40px;}
+/* — The subtitle paragraph (e.g. "Game Developer & XR Engineer") — */
+.p-5 p {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--ink-mid);
+    margin-top: 1rem;
+    letter-spacing: 0.06em;
 }
 
-.center1{
-  text-align: center;
-  color: white;
+/* — Bold text inside the subtitle — */
+.p-5 strong {
+    font-weight: 500;
+    color: var(--ink);
 }
 
-.center2{
-  padding-top: 20px;
-  display: flex;
-  justify-content: center;
-  
+
+/* ------------------------------------------------------------
+   NAVIGATION BAR  (.navbar)
+
+   Bootstrap provides the navbar structure and responsive
+   collapse behaviour. We override its visual appearance here.
+   ------------------------------------------------------------ */
+.navbar {
+    background: var(--bg-hero) !important; /* !important beats Bootstrap's bg-dark */
+    border-top: 1px solid var(--border-strong);
+    border-bottom: 1px solid var(--border-strong);
+    padding: 0 2rem;
 }
 
-.Arrow{
-  transform: scaleX(-1);
-  width: 1100px;
+/* — Nav link styling (both normal and active state) — */
+.navbar-dark .navbar-nav .nav-link,
+.navbar-dark .navbar-nav .nav-link.active {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink-mid) !important; /* overrides Bootstrap's default light colour */
+    padding: 1.1rem 1.5rem 1.1rem 0;
+    transition: var(--transition); /* smooth colour change on hover */
+    position: relative; /* needed so the ::after underline positions correctly */
 }
 
-.Bottom{
-  margin-bottom: 100px;
+/* — Animated underline on nav links —
+   We start it at width: 0 (invisible) and animate it to width: 70%
+   on hover. The ::after pseudo-element is the underline itself. */
+.navbar-dark .navbar-nav .nav-link::after {
+    content: '';             /* empty content — we just want the visual bar */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;               /* starts invisible */
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.2s ease; /* only animate the width, not everything */
 }
 
-.back{
-  top: 100px;
+/* — On hover or when the link is the current active page — */
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link.active {
+    color: var(--ink) !important; /* darken text */
 }
 
-.Undertxt{
-   text-align: center;
-   color: white;
+/* — Expand the underline on hover / active — */
+.navbar-dark .navbar-nav .nav-link:hover::after,
+.navbar-dark .navbar-nav .nav-link.active::after {
+    width: 70%; /* slide in from left */
 }
 
-.Card{
-  float: left;
-  margin:50px;
-  width: 400px;
-  height: 175px;
-  top: 100px
+
+/* ------------------------------------------------------------
+   PAGE SECTION WRAPPERS
+
+   .sec  = the main/home page body class (on <body>)
+   .sec2 = used on other pages (CV, Links etc.)
+   ------------------------------------------------------------ */
+.sec  {
+    background: none;    /* body's own background handles the colour */
+    min-height: 100vh;   /* at least full viewport height tall */
 }
 
-.CardImg{
-  text-align:center;
-  
- padding-left: 10px;
- padding-right: 10px;
-  
+.sec2 {
+    background: var(--bg-gallery);
+    min-height: 100vh;
 }
 
-.Logo{
-  
-  padding: 40px;
-  transition: transform .2s; /* Animation */  
-  margin: 0 auto;
+
+/* ------------------------------------------------------------
+   ABOUT ME SECTION
+
+   A full-width horizontal band that separates the hero from
+   the gallery. Uses CSS Grid to place the label and body text
+   side by side.
+   ------------------------------------------------------------ */
+.about-section {
+    background: var(--bg-about);
+    border-top: 1px solid var(--border-strong);
+    border-bottom: 1px solid var(--border-strong);
+    padding: 3.5rem 2rem;
 }
 
-.Logo:hover{
-    transform: scale(1.5);
+/* — Inner wrapper that controls the two-column layout — */
+.about-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;  /* centre horizontally */
+
+    /* CSS Grid: first column is 200px fixed, second takes all remaining space */
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;        /* space between the two columns */
+    align-items: start; /* both columns align to the top */
 }
 
-.ParentCarousel{
-   display: grid;
-   
+/* — Left column: the big "About Me" label — */
+.about-label {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    padding-top: 0.2rem;
+    border-right: 2px solid var(--border-strong); /* the vertical divider line */
+    padding-right: 2rem;
+}
+
+/* — The small "// about" code comment inside the label — */
+.about-label span {
+    display: block;         /* forces it onto its own line above "About Me" */
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--accent);   /* orange */
+    letter-spacing: 0.2em;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+/* — Right column: bio paragraphs — */
+.about-body p {
+    font-size: 0.95rem;
+    color: var(--ink-mid);
+    line-height: 1.8;
+    max-width: 60ch; /* ch = width of the "0" character — limits line length for readability */
+}
+
+/* — Space between consecutive paragraphs —
+   p + p means "a <p> that directly follows another <p>" */
+.about-body p + p {
+    margin-top: 0.85rem;
+}
+
+/* — Portfolio link styling — */
+.about-body a {
+    color: var(--accent);
+    text-decoration: none;   /* remove default underline */
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--accent); /* manual underline we can style */
+    transition: var(--transition);
+}
+
+/* — Link hover state: turns ink-black — */
+.about-body a:hover {
+    color: var(--ink);
+    border-color: var(--ink);
+}
+
+/* — Skill tag row (Unity, VR/AR, C#, etc.) — */
+.about-tags {
+    margin-top: 1.25rem;
+    display: flex;      /* lay tags out in a horizontal row */
+    flex-wrap: wrap;    /* wrap to next line if they don't all fit */
+    gap: 0.5rem;        /* space between each tag */
+}
+
+/* — Individual skill tag pill — */
+.about-tags span {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.65rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 2px;        /* very slight rounding — keeps it sharp/technical */
+    color: var(--ink-mid);
+    background: var(--surface);
+}
+
+
+/* ------------------------------------------------------------
+   GALLERY SECTION HEADINGS
+
+   .center1  = "Selected Work" heading
+   .Undertxt = subtitle line beneath it
+   ------------------------------------------------------------ */
+.center1 {
+    text-align: left;
+    max-width: var(--max-w);
+    margin: 3rem auto 0; /* 3rem top gap, auto centres horizontally, 0 bottom */
+    padding: 0 2rem;
+}
+
+.center1 h2 {
+    font-family: var(--font-display);
+    /* clamp: fluid size between 1.6rem and 2.4rem based on viewport */
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--ink);
+    line-height: 1.1;
+}
+
+/* Hides any <br> tags left in the HTML — we use padding for spacing instead */
+.center1 br {
+    display: none;
+}
+
+.Undertxt {
+    text-align: left;
+    max-width: var(--max-w);
+    margin: 0.75rem auto 0;
+    padding: 0 2rem;
+}
+
+.Undertxt h3 {
+    font-family: var(--font-mono);
+    font-size: 0.75rem !important; /* !important overrides Bootstrap's h3 default size */
+    font-weight: 400;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+/* ------------------------------------------------------------
+   GALLERY GRID
+
+   The gallery uses Bootstrap's .row / .col-lg-4 grid system
+   to create three equal columns. We add spacing and the image
+   wrapper styles here.
+   ------------------------------------------------------------ */
+.Gallery {
+    max-width: var(--max-w);
+    margin: 2rem auto 0;
+    padding: 0 2rem 5rem; /* 5rem bottom padding gives breathing room before page end */
+}
+
+/* Override Bootstrap's default row gutters */
+.Gallery .row {
+    --bs-gutter-x: 1rem; /* horizontal gap between columns */
+    --bs-gutter-y: 0;    /* no extra vertical gap (we handle that with .img-wrap) */
+}
+
+/* — Wrapper around each image + its caption —
+   Using <figure> is semantically correct HTML for image + caption pairs */
+.img-wrap {
+    margin-bottom: 1rem; /* space between stacked images in a column */
+    position: relative;
+}
+
+/* — Caption text below each image — */
+.img-wrap figcaption {
+    margin-top: 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding-left: 2px;
+}
+
+/* — The images and video themselves — */
+.imageBack {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    display: block;      /* removes the small gap below images caused by inline display */
+    overflow: hidden;    /* clips anything that pokes outside the rounded corner */
+    transition: var(--transition); /* smooth hover animation */
+    background: var(--surface);   /* shows while the image is loading */
+    width: 100%;         /* fills the column width */
+}
+
+/* — Image hover effect: lifts up with a shadow — */
+.imageBack:hover {
+    border-color: var(--accent);       /* border turns orange */
+    transform: translateY(-3px);       /* moves 3px upward */
+    /* two shadows stacked: a flat offset in accent colour + a soft blur beneath */
+    box-shadow: 4px 4px 0 var(--accent-light), 0 8px 24px rgba(0,0,0,0.1);
+}
+
+
+/* ------------------------------------------------------------
+   CARDS  (.Card)
+
+   Used on other pages (e.g. Links.html). Floated layout —
+   older technique but kept for compatibility with existing pages.
+   ------------------------------------------------------------ */
+.Card {
+    float: left;        /* cards sit side by side */
+    margin: 1.5rem;
+    width: 360px;
+    min-height: 160px;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    transition: var(--transition);
+}
+
+/* — Card hover: shifts up-left and gains an offset shadow — */
+.Card:hover {
+    border-color: var(--accent);
+    box-shadow: 4px 4px 0 var(--accent); /* flat offset shadow — game UI feel */
+    transform: translate(-2px, -2px);    /* moves slightly up and left */
+}
+
+
+/* ------------------------------------------------------------
+   LOGO / ICON  (.Logo)
+
+   Used for technology logos (Unity, Blender etc.) on other pages.
+   ------------------------------------------------------------ */
+.Logo {
+    padding: 1.5rem;
+    display: block;
+    margin: 0 auto; /* centres the logo horizontally */
+
+    /* Custom spring animation curve for the scale effect:
+       cubic-bezier(0.34, 1.56, 0.64, 1) overshoots slightly then settles —
+       gives a bouncy, organic feel rather than a stiff linear scale */
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
+
+    /* Slightly desaturated + warm tint to match the page palette */
+    filter: grayscale(0.3) sepia(0.1);
+}
+
+.Logo:hover {
+    transform: scale(1.35); /* grows to 135% of its size */
+    filter: grayscale(0);   /* removes the desaturation on hover — full colour */
+}
+
+
+/* ------------------------------------------------------------
+   CAROUSEL  (.carousel)
+
+   Bootstrap carousel for slideshows. We override sizing and
+   add our own border styling.
+   ------------------------------------------------------------ */
+.ParentCarousel {
+    display: grid;
+    place-items: center; /* centres the carousel both horizontally and vertically */
+    padding: 2rem 0;
 }
 
 .carousel {
-  
-  align-self: center;
-  justify-self: center;
-  width:640px;
-  height:360px;
-  padding-top: 7px;
-  box-shadow: 0px 0px 10px 23px rgba(0,0,0,50%);
+    width: 640px;
+    height: 360px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
-.sec{
 
-    background-size: cover;
-    background: repeating-linear-gradient(180deg,rgba(235,51,51,100%) 0%, rgba(49,44,158,100%) 100%);
-    background-attachment: fixed;
+/* ------------------------------------------------------------
+   CV / MISC IMAGES  (used on cv.html or other pages)
+   ------------------------------------------------------------ */
+.CVImage {
+    width: 100%;
+    height: auto;    /* maintains aspect ratio */
+    margin-left: 2%;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
 }
 
-.lead{
-    font-weight: bold;
-}
-
-.p-5{
-    background-color: rgb(70,70,70);
-}
-
-.sec2{
-
-    background-size: cover;
-    background: linear-gradient(180deg,rgba(235,51,51,100%) 0%, rgba(49,44,158,100%) 100%);
-    height: 175vh;
-    background-attachment: fixed;
-
-}
-.IndexImageAlign{
+/* Grid wrapper for images on the index/sec2 pages */
+.IndexImageAlign {
     display: grid;
 }
-.Sec2IndexImg{
-    margin-top: 50px;
-    margin-left: 50px;
 
-    width:25%;
+.Sec2IndexImg {
+    margin-top: 2.5rem;
+    margin-left: 2.5rem;
+    width: 25%;
     height: auto;
+    border-radius: var(--radius);
+    transition: var(--transition);
 }
-.CVImage{
-    height: auto;
+
+.Sec2IndexImg:hover {
+    transform: scale(1.03); /* subtle zoom on hover */
+}
+
+
+/* ------------------------------------------------------------
+   UTILITY / HELPER CLASSES
+
+   Small reusable classes applied directly in HTML.
+   ------------------------------------------------------------ */
+
+/* Bold intro text */
+.lead {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink);
+}
+
+/* Horizontal centred row (e.g. for buttons or icons) */
+.center2 {
+    padding-top: 2rem;
+    display: flex;
+    justify-content: center; /* horizontal centre */
+    align-items: center;     /* vertical centre */
+    gap: 1rem;
+}
+
+/* Bottom spacer */
+.Bottom {
+    margin-bottom: 5rem;
+}
+
+/* Back link positioning */
+.back {
+    position: relative;
+    top: 4rem;
+}
+
+/* Decorative arrow image — flipped and very faint */
+.Arrow {
+    transform: scaleX(-1); /* mirrors the image horizontally */
     width: 100%;
-    margin-left: 2%;
+    max-width: 1100px;
+    opacity: 0.06; /* nearly invisible — purely decorative texture */
 }
-.Gallery{
-    padding-left: 10%;
-    padding-right: 10%;
-}
-.imageBack{
-    border: 3px solid black;
+
+
+/* ------------------------------------------------------------
+   RESPONSIVE BREAKPOINT  (@media)
+
+   Everything inside this block ONLY applies when the screen
+   is 768px wide or narrower (tablets and phones).
+
+   We adjust layouts that don't work well on small screens —
+   mainly switching multi-column grids to single column.
+   ------------------------------------------------------------ */
+@media (max-width: 768px) {
+
+    /* Less padding on the hero on small screens */
+    .p-5 {
+        padding: 3rem 1.25rem 2rem;
+    }
+
+    /* Stack the About Me label and body text vertically instead of side by side */
+    .about-inner {
+        grid-template-columns: 1fr; /* single column on mobile */
+        gap: 1.5rem;
+    }
+
+    /* Replace the vertical right-border divider with a horizontal bottom border */
+    .about-label {
+        border-right: none;
+        border-bottom: 1px solid var(--border-strong);
+        padding-right: 0;
+        padding-bottom: 1rem;
+    }
+
+    /* Tighter side padding on small screens */
+    .center1, .Undertxt, .Gallery {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+
+    /* Carousel becomes fluid width and maintains 16:9 ratio */
+    .carousel {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+    }
+
+    /* Cards stack full-width instead of floating side by side */
+    .Card {
+        width: 100%;
+        margin: 1rem 0;
+        float: none;
+    }
 }
